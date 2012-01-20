@@ -26,10 +26,37 @@ class rosterRequest
 		}
 	}
 	
+	function reqUserByID($ID)
+	{
+		$database = new Database();
+      if($result = $database->doRows("SELECT USER_ID,NAME,SURNAME,DOB,PHONE,EMAIL,USERNAME,HOURS,ACTIVE,CONFIRMED FROM EMPLOYEE WHERE USER_ID='$ID' LIMIT 1"))
+		{
+			return $result['0'];
+		}
+	}
+	
 	function viewDayoff()
 	{
 		$database = new Database();
       if($result = $database->doRows("SELECT * FROM USER_EXCEPTIONS WHERE TYPE='Verlof' ORDER BY CONFIRMED"))
+		{
+			return $result;
+		}
+	}
+	
+	function viewHolidays()
+	{
+		$database = new Database();
+      if($result = $database->doRows("SELECT * FROM USER_EXCEPTIONS WHERE TYPE='Vakantie' ORDER BY CONFIRMED"))
+		{
+			return $result;
+		}
+	}
+	
+	function viewUsers()
+	{
+		$database = new Database();
+      if($result = $database->doRows("SELECT USER_ID,NAME,SURNAME,DOB,PHONE,EMAIL,USERNAME,HOURS,ACTIVE,CONFIRMED FROM EMPLOYEE ORDER BY CONFIRMED DESC"))
 		{
 			return $result;
 		}

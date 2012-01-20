@@ -36,6 +36,7 @@ class Database
       $conn = $this->connect($host, $username, $password);
       
 		mysql_select_db($database, $conn);
+		
 		// check if we need to fetch an array
       if((strpos($query,'DELETE') === false) &&
 			(strpos($query,'UPDATE') === false) &&
@@ -46,6 +47,9 @@ class Database
 		}
 		else
 		{
+			// PROJECT FROM MYSQL Injection
+			$query = mysql_real_escape_string($query);
+			
 			$row = true;
 			mysql_query($query);
 		}
@@ -59,7 +63,7 @@ class Database
 			$conn = $this->connect($host, $username, $password);
 			
 			mysql_select_db($database, $conn);
-	
+			
 			$result = mysql_query($query);
 			
 			$rowcount = 0;		
