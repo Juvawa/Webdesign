@@ -1,0 +1,81 @@
+.container{
+	margin-left: 250px;
+	width: 750px;
+	height: 750px;
+}
+.body{
+	width: 750px;
+}
+.header{
+	width: 748px;
+	height: 75px;
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+}
+.loginheader
+{
+	padding-right: 7px;
+}
+.footer{
+	text-align: center;
+	width: 748px;
+	height: 15px;
+	border-top: solid 1px;
+	border-left: solid 1px;
+}
+.weeknr{
+	float: left;
+	width: 80px;
+	height: 20px;
+	margin-left: 10px;
+	font-size: 20px;
+	font-style
+}
+.day{
+	width: 120px;
+	height: 20px;
+	font-size:15px;
+	margin-left: 10px;
+	margin-top: 3px;
+}
+.login{
+	text-align: right;
+	float: right;
+	margin-left: 300px;
+	height: 54px;
+	width: 300px;
+}
+.date_td{
+	border-bottom: solid 1px;
+}
+.day_td{
+	
+	margin-left: 5px;
+	border-collapse: seperate !important;
+	text-align: center;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+	width: 100px;
+}
+.dayName_td{
+	
+	text-align: center;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+	width: 100px;
+}
+.grid{
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	float: right;
+	width: 700px;
+	height: 420px;
+}
+.bodynotloggedin{
+	text-align: center;
+	color: #FF0000;
+}
+.week_table{
+	margin-top: 5px;
+
+}
