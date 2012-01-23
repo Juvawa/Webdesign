@@ -57,27 +57,37 @@ function checkPhone() {
 }
 
 function checkUsername() {
-        var xmlhttp;
-        if (document.register.username.value.length != 0) {
-                if(document.register.username.value.length < 4) {
-                        document.getElementById("div_username").innerHTML="";
-                        return;
-                }
-        }
-        if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-        } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        document.getElementById("div_username").innerHTML = xmlhttp.responseText;
-                }
-        }
-        xmlhttp.open("GET", "getusername.asp?username=" + str, true);
-        xmlhttp.send();
+	var xmlhttp;
+	var username = document.register.username.value;
+	if (document.register.username.value.length != 0) {
+			if(document.register.username.value.length < 5) {
+				document.getElementById("div_username").innerHTML = "Username must be longer than 4 characters";
+				document.register.username.style.borderColor = "red";
+				return false;
+			} else {
+				document.register.username.style.borderColor = "";
+			}
+				
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		xmlhttp.onreadystatechange = function() {
+			var result = xmlhttp.responseText;
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("div_username").innerHTML = result;
+				if(result.length != "0") {
+					document.register.username.style.borderColor = "red";
+				}
+			}
+		}
+		xmlhttp.open("GET", "user_test.php?username=" + username, true);
+		xmlhttp.send();
+	}
 }
 
 function checkPassword() {
@@ -97,12 +107,33 @@ function checkPassword() {
 
 function checkEmail() {
         var regex_email = /^(\w+\.)*\w+@(\w+\.)+[A-Za-z]+$/;
+		var email = document.register.email.value;
         if(document.register.email.value.length != 0) {
-                if(!regex_email.test(document.register.email.value)) {
-                        document.register.email.style.borderColor = "red";
-                        document.getElementById("div_email").innerHTML = "Email doesn't have the right syntax";
-                        return false;
-                }
+			if(!regex_email.test(document.register.email.value)) {
+					document.register.email.style.borderColor = "red";
+					document.getElementById("div_email").innerHTML = "Email doesn't have the right syntax";
+					return false;
+			}
+			
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+	
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var result = xmlhttp.responseText;
+					document.getElementById("div_email").innerHTML = result;
+					if(result.length != "0") {
+						document.register.email.style.borderColor = "red";
+					}
+				}
+			}
+			xmlhttp.open("GET", "email_test.php?email=" + email, true);
+			xmlhttp.send();
         }
         document.register.email.style.borderColor = "";
         document.getElementById("div_email").innerHTML = "";
@@ -121,10 +152,4 @@ function checkEmpty(form) {
                 }
         }
         return true;
-}
-
-function resetBorder(){
-        if(document.register.username.value.length != 0) {
-                document.register.username.style.borderColor = "";
-        }
 }

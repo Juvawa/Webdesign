@@ -272,6 +272,34 @@ if(isset($_GET['adminpage']))
 			echo "</table>";
 		}
 	}
+	elseif($_GET['adminpage'] == "shifts")
+	{
+		echo "
+		<h2>Edit the Default shifts</h2>
+		<table border=\"1\" style=\"width: 750px; border-style: solid; border-width: 1px;\">
+			<tr>
+				<td>DAY</td><td>Shift Start</td><td>Shift End</td><td>Employees Required</td><td>Note</td><td>Edit</td><td>Delete</td>
+			</tr>
+		";
+		$rosterCheck = new rosterRequest();
+		$overview = $rosterCheck->getShifts();
+		
+		for($i = 0; $i < count($overview); $i++)
+		{
+			if(isset($overview[$i]['SHIFT_DAY']))
+			{
+				echo "<tr style=\"background-color: "; if($i & 1){echo"#F2F5A9";}else{echo"#CEE3F6";} echo";\">
+					<td>". $overview[$i]['SHIFT_DAY'] . "</td>
+					<td>" . $overview[$i]['TIME_START'] . "</td>
+					<td>" . $overview[$i]['TIME_END'] . "</td>
+					<td>" . $overview[$i]['EMPLOYEES_WORKING'] . "</td>
+					<td>" . $overview[$i]['NOTE'] . "</td>
+					<td><a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&edit=".$overview[$i]['SHIFT_ID']."\" /><img src=\"images/gtk-edit.png\" alt=\"edit\" /></a></td>
+					<td><a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&delete=".$overview[$i]['SHIFT_ID']."\" /><img src=\"images/gtk-delete.png\" alt=\"delete\" /></td></tr>";
+			}
+		}
+		echo "<tr><td colspan=\"7\" style=\"text-align: right;\"><a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&addnew=1\" /><img src=\"images/gtk-add.png\" alt=\"add new entry\" /></a></td></tr></table>";
+	}
 	else
 	{
 		echo "<h2 style=\"text-align: center;\">You made a Boo-hoo!</h2>";
@@ -290,41 +318,47 @@ else
 			<td>
 				<a href=\"?page=admin.php&adminpage=users\" />Moderate / Approve Users</a>
 			</td>
-				<td>";
-					$rosterCheck = new rosterRequest();
-					$rosterCheck->checkNewuser();
-					echo "
-				</td>
-		</tr>
-		<tr>
-			<td>
-				<a href=\"?page=admin.php&adminpage=rosters\" />Moderate / Approve Rosters</a>
-			</td>
-			<td>
-				<p>
-					&nbsp;
-				</p>
+			<td>";
+				$rosterCheck = new rosterRequest();
+				$rosterCheck->checkNewuser();
+				echo "
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<a href=\"?page=admin.php&adminpage=daysoff\" />Moderate / Approve Days-off</a>
 			</td>
-				<td>";
-					$rosterCheck = new rosterRequest();
-					$rosterCheck->checkDayoff();
-					echo "
-				</td>
+			<td>";
+				$rosterCheck = new rosterRequest();
+				$rosterCheck->checkDayoff();
+				echo "
+			</td>
 		</tr>
 		<tr>
 			<td>
 				<a href=\"?page=admin.php&adminpage=holidays\" />Moderate / Approve Holidays</a>
 			</td>
-					<td>";
-						$rosterCheck = new rosterRequest();
-						$rosterCheck->checkHoliday();
-						echo "
-					</td>
+			<td>";
+				$rosterCheck = new rosterRequest();
+				$rosterCheck->checkHoliday();
+				echo "
+			</td>
+		</tr>
+				<tr>
+			<td>
+				<a href=\"?page=admin.php&adminpage=rosters\" />Make / Edit Rosters</a>
+			</td>
+			<td>
+				<p>Make / Edit Rosters</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href=\"?page=admin.php&adminpage=shifts\" />Moderate Shifts</a>
+			</td>
+			<td>
+				<p>Moderate Default shifts</p>
+			</td>
 		</tr>
 	</table>
 	</center>

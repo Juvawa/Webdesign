@@ -100,5 +100,14 @@ class rosterRequest
 			echo "<p>No unconfirmed items!</p>";
 		}
 	}
+	
+	function getShifts()
+	{
+		$database = new Database();
+      if($result = $database->doRows("SELECT * FROM SCHEDULE_SHIFTS ORDER BY SHIFT_DAY, TIME_START ASC"))
+		{
+			return $result;
+		}
+	}
 }
 ?>

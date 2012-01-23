@@ -5,7 +5,9 @@
 	$result = $database -> doRows("SELECT USERNAME FROM EMPLOYEE");
 	
 	for($i = 0; $i < count($result); $i++) {
-		echo $result[$i]['USERNAME'] . "\n";
+		if($result[$i]['USERNAME'] == $_GET['username']) {
+			echo "This username is already in use";
+		}
 	}
 
 ?>
