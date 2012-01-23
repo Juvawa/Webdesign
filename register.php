@@ -105,7 +105,7 @@ echo "
 			</tr>
 			
 			<tr>
-				<td class = \"register\"><input type=\"submit\" value= \"submit\" name=\"reg\" /></td>
+				<td class = \"register\"><input type=\"image\" src=\"images/reg_button.png\" name=\"reg\" alt=\"Register\" /></td>
 				<td></td>
 			</tr>
 		</table>
