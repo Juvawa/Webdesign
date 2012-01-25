@@ -5,6 +5,8 @@
 	 * You may not sell this script or remove these header comments
 	 * @author Hamid Alipour, http://blog.code-head.com/
 	**/
+	
+	error_reporting(0);
  
 	define('SHOW_DETAILS', true);
  
