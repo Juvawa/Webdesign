@@ -1,0 +1,184 @@
+/*
+ * CSS Style Sheet
+ * file: schedule_week.css
+ * location: <document root>/includes/layout/css/
+ * 
+ * author: Casper van der Poll
+ */
+.container{
+	margin-left: 250px;
+	width: 750px;
+	height: 750px;
+}
+.body{
+	width: 750px;
+	min-height: 450px; /* Added by Cas */
+}
+.header{
+	width: 748px;
+	height: 75px;
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+}
+.loginheader /* Added by Cas */
+{
+	padding-right: 7px;
+}
+.footer{	/* Added by Cas */
+	text-align: center;
+	width: 748px;
+	height: 15px;
+	border-top: solid 1px;
+	border-left: solid 1px;
+}
+.weeknr{
+	float: left;
+	width: 80px;
+	height: 20px;
+	margin-left: 10px;
+	font-size: 20px;
+	font-style
+}
+.day{
+	width: 120px;
+	height: 20px;
+	font-size:15px;
+	margin-left: 10px;
+	margin-top: 3px;
+}
+.login{
+	text-align: right;
+	float: right;
+	margin-left: 300px;
+	height: 54px;
+	width: 300px;
+}
+.time{
+	float: left;
+	margin-top: 1px;
+	width: 40px;
+	height: 420px;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+}
+.day_week{
+	
+	padding: 5px;
+	margin-top: 2px;
+	width: 740px;
+}
+.week_table{
+	margin-left: 45px;
+	width: 700px;	
+}
+.grid_table{
+	width: 690px;
+	height: 420px;
+}
+.day_td{
+	text-align: center;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+	width: 100px;
+}
+.day_td_sunday{
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+	text-align: center;
+	width: 100px;
+}
+.day_td_monday{
+	text-align: center;
+	width: 100px;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+
+}
+.grid{
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	float: right;
+	width: 700px;
+	height: 420px;
+}
+.td_time_block{
+	width: 95px;
+	height: 40px;
+	border-style: solid;
+	border-width: 1px;
+}
+.vflip{
+	padding-bottom: 60px;
+	margin-right: -60px;
+	font-family: arial;
+	font-size: 20px;
+	-webkit-transform: rotate(-90deg); 
+	-moz-transform: rotate(-90deg);
+
+}
+.monday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+.tuesday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+}
+.wednesday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+.thursday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+.friday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}.saturday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+.sunday{
+	float: left;
+	width: 90px;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+.work{
+	/*-webkit-transform: rotate(+180deg);
+	-moz-transform: rotate(+180deg);*/
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	border-top: solid 1px;
+	margin-right: 1px;
+	float: left;
+}
+.bodynotloggedin /* Added by Cas */
+{
+	text-align: center;
+	color: #FF0000;
+}
+
+/* Added by Justin*/
+#div_name, #div_surname,
+#div_dob, #div_phone, #div_username,
+#div_password, #div_email {
+    color: red;
+    float: left;
+}
+
+td.register {
+    width = 100px;
+}

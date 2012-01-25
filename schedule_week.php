@@ -35,10 +35,9 @@
 			</table>
 		</div>
 		<?php
-			require('test.php');
-			$test1 = new Testen();
+			
 			$day = date('l');
-			if($day == "Monday"){
+			/*if($day == "Monday"){
 				$date = date("Y-m-d");
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+2, date("Y")));
@@ -58,7 +57,7 @@
 					</div>";
 		
 			}
-			elseif($day == "Tuesday"){
+			if($day == "Tuesday"){
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d"), date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+1, date("Y")));
@@ -76,8 +75,11 @@
 						<div class=\"sunday\">".getEmployees($date6)."</div>						
 					</div>";
 			
-			}
-			elseif($day == "Wednesday"){
+			}*/
+			if($day == "Wednesday"){
+				require('test.php');
+				$test1 = new Testen();
+				
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-2, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d"), date("Y")));
@@ -86,7 +88,6 @@
 				$date5 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+3, date("Y")));
 				$date6 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+4, date("Y")));
 				$result = $test1 -> createWeek($date);
-				echo "poep".$result;
 				$result1 = $test1 -> createWeek($date1);
 				$result2 = $test1 -> createWeek($date2);
 				$result3 = $test1 -> createWeek($date3);
@@ -103,8 +104,8 @@
 						<div class=\"sunday\">".$result6."</div>						
 					</div>";
 			
-			}
-			elseif($day == "Thursday"){
+			}/*
+			if($day == "Thursday"){
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-3, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-2, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
@@ -123,7 +124,7 @@
 					</div>";
 			
 			}
-			elseif($day == "Friday"){
+			if($day == "Friday"){
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-4, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-3, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-2, date("Y")));
@@ -142,7 +143,7 @@
 					</div>";
 			
 			}
-			elseif($day == "Saturday"){
+			if($day == "Saturday"){
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-5, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-4, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-3, date("Y")));
@@ -161,7 +162,7 @@
 					</div>";
 			
 			}
-			elseif($day == "Sunday"){
+			if($day == "Sunday"){
 				$date =  date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-6, date("Y")));
 				$date1 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-5, date("Y")));
 				$date2 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-4, date("Y")));
@@ -169,7 +170,7 @@
 				$date4 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-2, date("Y")));
 				$date5 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
 				$date6 = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d"), date("Y")));
-			echo "<div class=\"grid\">
+				echo "<div class=\"grid\">
 						<div class=\"monday\">".getEmployees($date)."</div>
 						<div class=\"tuesday\">".getEmployees($date1)."</div>
 						<div class=\"wednesday\">".getEmployees($date2)."</div>
@@ -178,7 +179,7 @@
 						<div class=\"saturday\">".getEmployees($date5)."</div>
 						<div class=\"sunday\">".getEmployees($date6)."</div>						
 					</div>";
-			}		
+			}*/		
 		?>
 		<div class="time">
 			16:00<br />

@@ -25,21 +25,20 @@ class Testen{
 		$worktimes = array();
 		for($count = 0; $count < count($result); $count++){
 			$values = array();
-			$result3 = $database -> doQuery("SELECT NAME FROM EMPLOYEE WHERE USER_ID =".$result[$count]['USER_ID']);
-			$result2 = $database -> doQuery("SELECT * FROM SCHEDULE_HOURS WHERE USER_ID =".$result[$count]['USER_ID']." AND DATE ='".$date."'");
+			$result3 = $database -> doQuery("SELECT NAME FROM EMPLOYEE WHERE USER_ID ='".$result[$count]['USER_ID']."'");
+			$result2 = $database -> doQuery("SELECT * FROM SCHEDULE_HOURS WHERE USER_ID ='".$result[$count]['USER_ID']."' AND DATE ='".$date."'");
 			$values['NAME'] = $result3['NAME'];
 			$values['HEIGHT'] = $this->barHeight($result2['TIME_START'], $result2['TIME_END']);
-			var_dump($result2['TIME_START']
 			$values['MARGIN'] = $this->marginTop($result2['TIME_START']);
 			$worktimes[$count] = $values;
 			$counter++;
 		}
-		$worktimes['WIDTH'] = 100 / $counter;
+		$worktimes['WIDTH'] = (100 / $counter)-1;
 		return $worktimes;		
 	}
 	
 	function marginTop($start){
-		return ($start - 16) * 40;
+		return ($start-16) * 40;
 	}
 	
 	function barHeight($start, $end) {
@@ -55,15 +54,12 @@ class Testen{
 	(string)$var= " ";
 	for($count = 0; $count < (count($worktimes)-1); $count++){
 			$var = $var . ($this->createDiv($worktimes[$count], $worktimes['WIDTH']));
-			echo $var;
 		}
 		//var_dump($var);
 		return $var;
 	}
 	function createDiv($worktimes, $width) {
-		(string)$result = "<div class=\"work\" style=\"height: ".$worktimes['HEIGHT']."px; width: ".$width."px; margin-top: ".$worktimes['MARGIN']."px;\">".$worktimes['NAME']."</div>";
-		echo $result;
-		print_r($result);
+		(string)$result = "<div class=\"work\" style=\"float: left;height: ".$worktimes['HEIGHT']."px; width: ".$width."px; margin-top: ".$worktimes['MARGIN']."px;\"><div class=\"vflip\">".$worktimes['NAME']."</div></div>";
 		
 		return $result;
 	}
