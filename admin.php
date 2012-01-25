@@ -22,51 +22,102 @@ if(isset($_GET['adminpage']))
 		echo "<h2 style=\"text-align: center;\">Approve / Moderate Users</h2>";
 		
 		$rosterCheck = new rosterRequest();
-		if(isset($_GET['confirmid']) || isset($_GET['disableid']) || isset($_GET['enableid']))
+		if(isset($_GET['change']))
 		{
-			if(isset($_GET['confirmid'])){ $id = $_GET['confirmid']; }
-			elseif(isset($_GET['enableid'])){ $id = $_GET['enableid']; }
-			elseif(isset($_GET['disableid'])){ $id = $_GET['disableid']; }
-			else{$id = NULL;}
-			
-			echo "<center><p style=\"color: #FF0000;\" />Are you sure you want to ";
-			if(isset($_GET['confirmid'])){ echo "confirm"; }
-			elseif(isset($_GET['enableid'])){ echo "enable"; }
-			elseif(isset($_GET['disableid'])){ echo "disable"; }
-			echo " the folowing user</p>";
+		if(isset($_GET['change']))
+		{
+			$id = $_GET['change'];
+		}
+		else
+		{
+			$id = NULL;
+		}
 			$result = $rosterCheck->reqUserByID($id);
+			$areas = $rosterCheck->reqAreas();
 			echo "
+				<form name=\"moderate\" method=\"POST\" action=\"moderate.php\">
 				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 					<tr>
-						<td>Username</td><td>".$result['USERNAME']."</td>
+						<td>Username</td><td>".$result['USERNAME']."</td><td></td>
 					</tr>
 					<tr>
-						<td>Name</td><td>".$result['NAME']."</td>
+						<td>Name</td><td style=\"width: 250px;\"><input type=\"text\" name=\"name\" id=\"name\" value=\"".$result['NAME']."\" onblur=\"return checkFname();\" /></td><td><div id=\"div_name\" style=\"width: 250px;\"></div></td>
 					</tr>
 					<tr>
-						<td>Surname</td><td>".$result['SURNAME']."</td>
+						<td>Surname</td><td style=\"width: 250px;\"><input type=\"text\" name=\"surname\" id=\"surname\" value=\"".$result['SURNAME']."\" onblur=\"return checkSurname();\" /></td><td><div id=\"div_surname\" style=\"width: 250px;\"></div></td>
 					</tr>
 					<tr>
-						<td>Date of Birth</td><td>".$result['DOB']."</td>
+						<td>Date of Birth</td><td style=\"width: 250px;\"><input type=\"text\" name=\"dob\" id=\"dob\" value=\"".$result['DOB']."\" onblur=\"return checkDob();\"  /></td><td><div id=\"div_dob\" style=\"width: 250px;\"></div></td>
 					</tr>
 					<tr>
-						<td>E-Mail</td><td>".$result['EMAIL']."</td>
+						<td>E-Mail</td><td style=\"width: 250px;\">".$result['EMAIL']."</td><td></td>
 					</tr>
 					<tr>
-						<td>Phone</td><td>".$result['PHONE']."</td>
+						<td>Phone</td><td style=\"width: 250px;\"><input type=\"text\" name=\"phone\" id=\"phone\" value=\"0".$result['PHONE']."\" onblur=\"return checkPhone();\"  /></td><td><div id=\"div_phone\" style=\"width: 250px;\"></div></td>
 					</tr>
 					<tr>
-						<td>Hours</td><td>".$result['HOURS']."</td>
+						<td>Hours</td><td style=\"width: 250px;\"><select name=\"hours\" id=\"hours\">";
+					for($i = 0; $i <= 40; $i++){
+						echo "<option>$i</option>";
+					}
+					echo" </td><td></td>
 					</tr>
 					<tr>
-						<td colspan=\"2\" style=\"text-align: center;\"> Click to ";
-						if(isset($_GET['confirmid'])){ echo "confirm"; }
-						elseif(isset($_GET['enableid'])){ echo "enable"; }
-						elseif(isset($_GET['disableid'])){ echo "disable"; }
-						echo "</td>
+						<td>Areas</td>
+						<td style=\"width: 250px;\">";
+						$isCheck = FALSE;
+						$allowedareas = preg_split("/,/",$result['AREAS']);
+						foreach($areas as $value) {
+						for($c = 0; $c < count($allowedareas); $c++){
+							if($value == $allowedareas[$c]) {
+							$isCheck = TRUE;
+							}
+						}
+						if($isCheck == TRUE)
+						{
+							echo "<input type=\"checkbox\" checked/>$value";
+						} else {
+								echo "<input type=\"checkbox\" />$value";
+							}
+						}
+						
+							
+					echo" </td>
+					<tr>
+						<td>Enable</td>
+						<td style=\"width: 250px;\">";
+						if($result['ACTIVE'] == "YES") {
+							echo" <input type=\"radio\" checked />YES
+								<input type=\"radio\" />NO
+							";
+						} elseif($result['ACTIVE'] == "NO") {
+							echo" <input type=\"radio\" />YES
+								<input type=\"radio\" checked />NO
+							";
+						}
+						
+					echo "</td>
+					</tr>
+					<tr>
+						<td>Confirm</td>
+						<td>";
+						if($result['CONFIRMED'] == "YES") {
+							echo" <input type=\"radio\" checked />YES
+								<input type=\"radio\" />NO
+							";
+						} elseif($result['CONFIRMED'] == "NO") {
+							echo" <input type=\"radio\" />YES
+								<input type=\"radio\" checked />NO
+							";							
+						}			
+						
+					echo"</td>
+					</tr>
+					<tr>
+						<td colspan=\"2\"><center><input type=\"submit\" value=\"submit\" /></center></td>
 					</tr>
 				</table>
-				</center>
+				</form>
 					";
 		}
 		else
@@ -76,7 +127,7 @@ if(isset($_GET['adminpage']))
 			echo "
 			<table align=\"center\" border=\"1\" style=\"border-style: solid; border-width: 1px; width: 700px;\">
 			<tr>
-				<td>Username</td><td>Name</td><td>Surname</td><td>Date of Birth</td><td>E-Mail</td><td>Phone</td><td>Hours on Contract</td><td>Active?</td><td>Confirmed?</td>
+				<td>Username</td><td>Name</td><td>Surname</td><td>Date of Birth</td><td>E-Mail</td><td>Phone</td><td>Hours on Contract</td><td>Change</td>
 			</tr>
 			";
 			for($count = 0; $count < count($result); $count++)
@@ -89,26 +140,7 @@ if(isset($_GET['adminpage']))
 							<td style=\"text-align: center;\">".$result[$count]['EMAIL']."</td>
 							<td style=\"text-align: center;\">0".$result[$count]['PHONE']."</td>
 							<td style=\"text-align: center;\">".$result[$count]['HOURS']."</td>
-							<td style=\"text-align: center;\">";
-							if($result[$count]['ACTIVE'] == "YES")
-							{
-								echo $result[$count]['ACTIVE'] . " (<a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&disableid=".$result[$count]['USER_ID']."\" />DISABLE?</a>)";
-							}
-							elseif($result[$count]['ACTIVE'] == "NO")
-							{
-								echo $result[$count]['ACTIVE'] . " (<a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&enableid=".$result[$count]['USER_ID']."\" />ENABLE?</a>)";
-							}
-				echo "</td>
-							<td style=\"text-align: center;\">";
-							if($result[$count]['CONFIRMED'] == "YES")
-							{
-								echo $result[$count]['CONFIRMED'];
-							}
-							elseif($result[$count]['CONFIRMED'] == "NO")
-							{
-								echo $result[$count]['CONFIRMED'] . " (<a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&confirmid=".$result[$count]['USER_ID']."\" />CONFIRM?</a>)";
-							}
-				echo "</td>
+							<td style=\"text-align: center;\"><a href=\"index.php?page=".$_GET['page']."&adminpage=".$_GET['adminpage']."&change=".$result[$count]['USER_ID']."\" />CHANGE</a></td>
 						</tr>
 						";
 			}
