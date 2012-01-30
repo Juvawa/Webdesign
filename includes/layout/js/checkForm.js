@@ -152,16 +152,3 @@ function checkEmpty(form) {
         }
         return true;
 }
-
-function checkHours() {
-	if(document.getElementById("hours").value.length != 0) {
-		if(isNaN(document.getElementById("hours").value) || (document.getElementById("hours").value.length > 2)) {
-			document.getElementById("div_hours").innerHTML = "Enter a valid 2 digit number";
-			document.getElementById("hours").style.borderColor = "red";
-			return false;
-		}
-	}
-	document.getElementById("div_hours").innerHTML = "";
-	document.getElementById("hours").style.borderColor = "";
-	return true;	
-}

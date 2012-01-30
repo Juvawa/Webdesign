@@ -149,7 +149,8 @@ if(isset($_GET['adminpage']))
 	}
 	elseif($_GET['adminpage'] == "rosters")
 	{
-		echo "<h2 style=\"text-align: center;\">Approve / Moderate Rosters</h2>";
+		echo "<h2 style=\"text-align: center;\">Make / Edit Rosters</h2>";
+		include('includes/roster/makeroster.php');
 	}
 	elseif($_GET['adminpage'] == "daysoff")
 	{	

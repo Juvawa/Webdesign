@@ -1,18 +1,34 @@
 <?php
-
-class Testen{	
+/*
+ * Schedule Week Buildup
+ * file: schedule.php
+ * location: <document root>/includes/roster/schedule.php
+ * 
+ * author: Casper van der Poll
+ */
+class Schedule{	
 	function createWeek($date){
 		$we = "";
 		$functie = $this -> getEmployees($date);
-		//var_dump($result);
 		$functie2 = $this -> getTimes($functie, $date);
-		//var_dump($result2);
 		$functie3 = $this -> createGrid($functie2);
 		return $functie3;
 	}
 	
+	function createWeekPersonal(){
+		$database = new Database();
+		$id_hardcode = "1";
+		$week = date('l');
+		$values = array();
+		$result =  $database -> doRows("SELECT DATE FROM SCHEDULE_DAYS WHERE SCHEDULE_DAYS.WEEK_NR = '4' AND SCHEDULE_DAYS.USER_ID = '1'"); 
+		var_dump($result);
+		for($count = 0; $count < count($result); $count++){
+				var_dump($result); 
+			}
+			
+		return $values;
+	}
 	function getEmployees($date){
-		//var_dump($date);
 		$database = new Database();
 		$result = $database -> doRows("SELECT USER_ID FROM SCHEDULE_DAYS WHERE DATE ='".$date."'");
 		return $result;
@@ -33,7 +49,7 @@ class Testen{
 			$worktimes[$count] = $values;
 			$counter++;
 		}
-		$worktimes['WIDTH'] = (100 / $counter)-1;
+		$worktimes['WIDTH'] = (90 / $counter)-2;
 		return $worktimes;		
 	}
 	
@@ -55,7 +71,6 @@ class Testen{
 	for($count = 0; $count < (count($worktimes)-1); $count++){
 			$var = $var . ($this->createDiv($worktimes[$count], $worktimes['WIDTH']));
 		}
-		//var_dump($var);
 		return $var;
 	}
 	function createDiv($worktimes, $width) {

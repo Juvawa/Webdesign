@@ -12,7 +12,7 @@
 }
 .body{
 	width: 750px;
-	min-height: 450px; /* Added by Cas */
+	min-height: 500px; /* Added by Cas */
 }
 .header{
 	width: 748px;
@@ -153,7 +153,56 @@
 .sunday{
 	float: left;
 	width: 90px;
-	margin-right: 10px;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.monday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.tuesday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.wednesday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.thursday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.friday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.saturday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.sunday_solid{
+	width: 90px;
+	height: 400px;
+	float: left;
+	margin-right: 5px;
 	margin-left: 5px;
 }
 .work{

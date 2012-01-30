@@ -10,7 +10,22 @@ require('includes/directcall.php');
 
 if(isset($_GET['view']))
 {
-	// CODE VOOR VERSCHILLENDE WEERGAVES
+	if($_GET['view'] == "week")
+	{
+		include('includes/roster/schedule_week.php');
+	}
+	elseif($_GET['view'] == "month")
+	{
+		
+	}
+	elseif($_GET['view'] == "day")
+	{
+		
+	}
+	else
+	{
+		
+	}
 }
 else
 {

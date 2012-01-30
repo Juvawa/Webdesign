@@ -38,10 +38,10 @@ echo "
 	{
 		echo "
 			<div style=\"text-align: right; margin-right: 1px;\" />
-				<img src=\"images/day_button.png\" alt=\"Per Day\" />
-				<img src=\"images/week_button.png\" alt=\"Per Week\" />
-				<img src=\"images/month_button.png\" alt=\"Per Month\" />
-				<img src=\"images/personal_button.png\" alt=\"Personal\" />
+				<a href=\"index.php?page=view_roster.php&view=day\" alt=\"view per day\" /><img src=\"images/day_button.png\" alt=\"Per Day\" /></a>
+				<a href=\"index.php?page=view_roster.php&view=week\" alt=\"view per week\" /><img src=\"images/week_button.png\" alt=\"Per Week\" /></a>
+				<a href=\"index.php?page=view_roster.php&view=month\" alt=\"view per month\" /><img src=\"images/month_button.png\" alt=\"Per Month\" /></a>
+				<a href=\"index.php?page=view_roster.php&view=personal\" alt=\"personal overview\" /><img src=\"images/personal_button.png\" alt=\"Personal\" /></a>
 				";
 			$checkButton = new checkAccess();
 			$checkButton->adminButton();
