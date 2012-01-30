@@ -152,3 +152,19 @@ function checkEmpty(form) {
         }
         return true;
 }
+
+function disableInput()
+{
+	if(document.getElementById("radiono1").checked == true) 
+	{
+		document.getElementById("startday1").readonly = true;
+		document.getElementById("endday1").readonly = true;
+		alert(document.getElementById("startday1").readonly);
+	}
+	else if(document.getElementById("radioyes1").checked == true)
+	{
+		document.getElementById.("startday1").readonly = false;
+		document.getElementById("endday1").readonly = false;
+	}
+
+}

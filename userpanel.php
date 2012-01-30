@@ -55,7 +55,7 @@ if(isset($_GET['userpage']))
 		
 		echo "
 		<center>
-		<form name=\"login_details\" mothod=\"POST\" action=\"update_login_details.php\">
+		<form name=\"login_details\" method=\"POST\" action=\"update_login_details.php\">
 			<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 				<tr>
 					<td style=\"width: 150px;\">Username:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"name\" id=\"name\" value=\"".$login['USERNAME']."\" onblur=\"return checkFname();\" /></td><td><div id=\"div_name\" style=\"width: 250px;\"></div></td>
@@ -79,10 +79,65 @@ if(isset($_GET['userpage']))
 	}
 	elseif($_GET['userpage'] == "preferences") 
 	{
-		$preferences = $doUserRequest -> reqShifts();
-		var_dump($preferences);
+		$preferences = $doUserRequest -> reqUserPreferences($_SESSION['userid']);
 		
 		echo "<h2 style=\"text-align: center;\"> Change roster preferences </h2>";
+		
+		echo "
+			<center>
+				<form name=\"preferences\" method=\"POST\" action=\"update_preferences.php\">
+				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
+					<tr>
+						<td style=\"width: 100px;\"></td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td><td>Saturday</td><td>Sunday</td>
+					</tr>
+					<tr>
+						<td style=\"width: 100px;\">Start Time</td>";
+					for($count = 0; $count < count($preferences); $count++) {
+						if($preferences[$count]['AVAILABLE'] == "YES") 
+						{
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" value=\"".$preferences[$count]['TIME_START']."\" size=\"8\" maxlength=\"8\" /></center></td>";
+						}
+						elseif($preferences[$count]['AVAILABLE'] == "NO") {
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" size=\"8\" maxlength=\"8\" /></center></td>";
+						}
+					}
+						
+		echo"		</tr>
+					<tr>
+						<td style=\"width: 100px;\">End time</td>
+					";
+					
+					for($count = 0; $count < count($preferences); $count++) {
+						if($preferences[$count]['AVAILABLE'] == "YES") 
+						{
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" value=\"".$preferences[$count]['TIME_END']."\" size=\"8\" maxlength=\"8\" /></center></td>";
+						}
+						elseif($preferences[$count]['AVAILABLE'] == "NO") {
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" size=\"8\" maxlength=\"8\" /></center></td>";
+						}
+					}
+
+		echo"		</tr>
+					<tr>
+						<td style=\"width: 100px;\">Available</td>
+					";
+					for($count = 0; $count < count($preferences); $count++) {
+						if($preferences[$count]['AVAILABLE'] == "YES") 
+						{
+							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" onclick=\"disableInput();\"checked />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" onclick=\"disableInput();\" />NO</center></td>";
+						}
+						elseif($preferences[$count]['AVAILABLE'] == "NO") {
+							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" onclick=\"disableInput();\" />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" onclick=\"disableInput();\" checked/>NO</center></td>";
+						}
+					}
+		echo"			</tr>
+					<tr>
+						<td colspan=\"8\" style=\"text-align: center;\"><input type=\"submit\" value=\"Submit\" alt=\"Submit\" /></td>
+					</tr>
+				</table>
+			</form>
+			</center>
+		";
 	}
 }
 else 
@@ -138,7 +193,7 @@ else
 
 	$userPreferences = $doUserRequest -> reqUserPreferences($_SESSION['userid']);
 
-	echo "<h2 style=\"text-align: center;\"> Roster preferences </h2>";
+	echo "<h2 style=\"text-align: center;\"> Availability</h2>";
 
 	echo "
 		<center>
@@ -147,90 +202,19 @@ else
 					<td style=\"width: 125px;\">Monday</td><td style=\"width: 125px;\">Tuesday</td><td style=\"width: 125px;\">Wednesday</td><td style=\"width: 125px;\">Thursday</td><td style=\"width: 125px;\">Friday</td><td style=\"width: 125px;\">Saturday</td><td style=\"width: 125px;\">Sunday</td>
 				</tr>
 				<tr>";
-
-				$count = 0;
-				if($count < 8) {
-					if($userPreferences[$count]['DAY'] == "MONDAY" && $userPreferences[$count]['AVAILABLE'] == "NO") 
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "MONDAY" && $userPreferences[$count]['AVAILABLE'] == "YES")
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
+					for($count = 0; $count < count($userPreferences); $count++) {
+						if($userPreferences[$count]['AVAILABLE'] == "YES") 
+						{
+							echo"<td style=\"width: 130\">".$userPreferences[$count]['TIME_START']." - ".$userPreferences[$count]['TIME_END']."</td>";
+						}
+						elseif($userPreferences[$count]['AVAILABLE'] == "NO") {
+							echo"<td style=\"width: 130\"></td>";
+						}
 					}
-					
-					if($userPreferences[$count]['DAY'] == "TUESDAY" && $userPreferences[$count]['AVAILABLE'] == "NO")
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "TUESDAY" && $userPreferences[$count]['AVAILABLE'] == "YES")
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-					
-					if($userPreferences[$count]['DAY'] == "WEDNESDAY" && $userPreferences[$count]['AVAILABLE'] == "NO") 
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "WEDNESDAY" && $userPreferences[$count]['AVAILABLE'] == "YES")
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-					
-					if($userPreferences[$count]['DAY'] == "THURSDAY" && $userPreferences[$count]['AVAILABLE'] == "NO") 
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "THURSDAY" && $userPreferences[$count]['AVAILABLE'] == "YES") 
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-					
-					if($userPreferences[$count]['DAY'] == "FRIDAY" && $userPreferences[$count]['AVAILABLE'] == "NO")
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "FRIDAY" && $userPreferences[$count]['AVAILABLE'] == "YES") 
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-					
-					if($userPreferences[$count]['DAY'] == "SATURDAY" && $userPreferences[$count]['AVAILABLE'] == "NO") 
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "SATURDAY" && $userPreferences[$count]['AVAILABLE'] == "YES")
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-					
-					if($userPreferences[$count]['DAY'] == "SUNDAY" && $userPreferences[$count]['AVAILABLE'] == "NO") 
-					{
-						echo"<td style=\"width: 125px;\"></td>";
-						$count++;
-					} 
-					elseif($userPreferences[$count]['DAY'] == "SUNDAY" && $userPreferences[$count]['AVAILABLE'] == "YES")
-					{
-						echo"<td style=\"width: 125px;\">".$userPreferences[$count]['TIME_START']."-".$userPreferences[$count]['TIME_END']."</td>";
-						$count++;
-					}
-				}
-				
+			
 			echo" </tr>
 				<tr>
-					<td colspan=\"7\" style=\"text-align: center;\"><a href=\"index.php?page=userpanel.php&userpage=preferences\">CHANGE ROSTER PREFERENCES</a></td>
+					<td colspan=\"7\" style=\"text-align: center;\"><a href=\"index.php?page=userpanel.php&userpage=preferences\">CHANGE AVAILABILITY</a></td>
 				</tr>
 			</table>
 		</center>

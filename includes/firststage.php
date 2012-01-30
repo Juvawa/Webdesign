@@ -35,6 +35,6 @@ if($_SERVER["HTTPS"] != "on")
    
 // OTHER INCLUDES
    // ROSTER DISPLAY
-   require('includes/roster/views.php');
+  // require('includes/roster/views.php');
 
 ?>
