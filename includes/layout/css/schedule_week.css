@@ -64,10 +64,11 @@
 .horizontal_time{
 	float: left;
 	margin-top: 1px;
-	width: 750px;
+	width: 749px;
 	height: 20px;
 	border-right: solid 1px;
 	border-bottom: solid 1px;
+	margin-bottom: 1px;
 }
 .horizontal_time_table{
 	text-align: right;
@@ -104,6 +105,13 @@
 	border-right: solid 1px;
 	border-bottom: solid 1px;
 
+}
+.grid2{
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	float: left;
+	width: 749px;
+	height: 420px;
 }
 .grid{
 	border-bottom: solid 1px;
@@ -216,7 +224,12 @@
 	margin-right: 5px;
 	margin-left: 5px;
 }
-.work{
+.work_day{
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	float: left;
+}
+.work_week{
 	/*-webkit-transform: rotate(+180deg);
 	-moz-transform: rotate(+180deg);*/
 	border-bottom: solid 1px;
@@ -234,7 +247,7 @@
 /* Added by Justin*/
 #div_name, #div_surname,
 #div_dob, #div_phone, #div_username,
-#div_password, #div_email {
+#div_password, #div_email, #div_oldpassword {
     color: red;
     float: left;
 }
