@@ -37,7 +37,7 @@ class Roster
 	function getUsers()
 	{
 		$users = new Database();
-		if($prefs = $users->doRows("SELECT USER_ID,NAME,HOURS,AREAS,ACTIVE,CONFIRMED FROM `EMPLOYEE` ORDER BY ACTIVE desc, HOURS desc, USER_ID, CONFIRMED"))
+		if($prefs = $users->doRows("SELECT USER_ID,NAME,HOURS,AREAS FROM `EMPLOYEE` WHERE ACTIVE='YES' ORDER BY HOURS desc, USER_ID"))
 		{
 			return $prefs;
 		}
@@ -136,22 +136,52 @@ class Roster
 		}
 	}
 	
-	function makeDropdown($day, $c)
+	function makeDropdown($day, $x)
 	{
 		$users = new Database();
 		if($available = $users->doRows("SELECT * FROM `USER_PREFERENCES` WHERE DAY='".$day."' AND AVAILABLE='YES'"))
 		{
-			echo "<select name=\"".$day . $c ."\">";
+			echo "<select style=\"width: 150px;\" id=\"".$day . $x ."\" name=\"".$day . $x ."\" onchange=\"change(this.value, '".$day . $x."');\">";
+			echo "<option value=\"\"></option>";
 			for($c = 0; $c < count($available); $c++)
 			{
-				echo "<option value=\"".$available[$c]['USER_ID']."\">".$this->getNamebyID($available[$c]['USER_ID'])."</option>";
+				echo "<option id=\"".$day . $x . $available[$c]['USER_ID']."\" value=\"".$available[$c]['USER_ID']."\">".$this->getNamebyID($available[$c]['USER_ID'])."</option>";	
 			}
 			
 			echo "</select>";
+			$this->createTimeDropdown($day, $x);
+			echo "<div id=\"user_".$day . $x ."\"></div>";
 		}
 		else
 		{
 			echo "<select><option>No Employees Available</option></select>";
+		}
+	}
+	
+	private function createTimeDropdown($day, $x)
+	{
+		$times = new Database();
+		
+		echo "Clockin: ";
+		if($listtimes = $times->doRows("SELECT * FROM `SCHEDULE_SHIFTS` WHERE CLOCKIN='YES' AND SHIFT_DAY='".$day."' ORDER BY TIME_START ASC"))
+		{
+			echo "<select id=\"".$day . $x ."_start\" name=\"".$day . $x ."_start\" onchange=\"change(".$day.$x.".text, '".$day . $x."');\"><option value=\"\"></option>";
+			for($c = 0; $c < count($listtimes); $c++)
+			{
+				echo "<option value=\"".$listtimes[$c]['TIME_START']."\">".$listtimes[$c]['TIME_START']."</option>";	
+			}
+			echo "</select>";
+		}
+		
+		echo "Clockout: ";
+		if($listtimes = $times->doRows("SELECT * FROM `SCHEDULE_SHIFTS` WHERE CLOCKOUT='YES' AND SHIFT_DAY='".$day."' ORDER BY TIME_END DESC"))
+		{
+			echo "<select id=\"".$day . $x ."_end\" name=\"".$day . $x ."_end\" onchange=\"change(".$day.$x.".text, '".$day . $x."');\"><option value=\"\"></option>";
+			for($c = 0; $c < count($listtimes); $c++)
+			{
+				echo "<option value=\"".$listtimes[$c]['TIME_END']."\">".$listtimes[$c]['TIME_END']."</option>";	
+			}
+			echo "</select>";
 		}
 	}
 	

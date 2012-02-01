@@ -1,7 +1,7 @@
 /*
  * Form validator
  * file: checkForm.js
- * location: <document root>/includes/layout/
+ * location: <document root>/includes/layout/js/
  * 
  * author: Justin van Wageningen
  */

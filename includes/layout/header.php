@@ -13,6 +13,8 @@ echo "
 <link href=\"includes/layout/css/schedule_week.css\" rel=\"stylesheet\" type=\"text/css\" />
 <script	type=\"text/javascript\" src=\"includes/layout/js/checkDob.js\"></script>
 <script type=\"text/javascript\" src=\"includes/layout/js/checkForm.js\"></script>
+<script type=\"text/javascript\" src=\"includes/layout/js/doUpdate.js\"></script>
+
 </head>
 <title></title>
 <body>

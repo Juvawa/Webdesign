@@ -22,16 +22,6 @@ for($c = 0; $c < count($exceptions); $c++)
 	echo $exceptions[$c]['USER_ID'] . " " . $exceptions[$c]['DATE_START'] . " " . $exceptions[$c]['DATE_END'] . " " . $exceptions[$c]['TYPE'] . " " . $exceptions[$c]['CONFIRMED'] . "<br />";
 }
 */
-$users = $roster->getUsers();
-for($c = 0; $c < count($users); $c++)
-{
-	if(strpos($users[$c]['AREAS'],','))
-	{
-		$new = explode(",",$users[$c]['AREAS']);
-		$users[$c]['AREAS'] = $new;
-	}
-	echo $users[$c]['NAME'] . " " . $users[$c]['USER_ID'] . " " . $users[$c]['HOURS'] . " " . $users[$c]['AREAS'] . " " . $users[$c]['ACTIVE'] . " " . $users[$c]['CONFIRMED'] . "<br />";
-}
 // HIERONDER GAAN WE PROBEREN DE CODE TE REALISEREN
 $shifts = $roster->getShifts();
 
@@ -99,5 +89,31 @@ for($c = 0; $c < count($shifts); $c++)
 		echo "</tr>";
 	}
 }
-echo "</table>";
+echo "</table>
+<div class=\"overlay\" id=\"overlay\"/>
+<table id=\"overlay\" border=\"1\">
+	<tr>
+		<td colspan=\"2\">Hier ga ik alle uren bijhouden</td>
+	</tr>
+";
+$users = $roster->getUsers();
+for($c = 0; $c < count($users); $c++)
+{
+	if(strpos($users[$c]['AREAS'],','))
+	{
+		$new = explode(",",$users[$c]['AREAS']);
+		$users[$c]['AREAS'] = $new;
+	}
+	if($users[$c]['HOURS'] == 0)
+	{
+		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . "</td><td><div id=\"hours_".$users[$c]['USER_ID']."\"></div></td></tr>";
+	}
+	else
+	{
+		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . " (" . $users[$c]['HOURS'] . ")</td><td><div id=\"hours_".$users[$c]['USER_ID']."\"></div></td></tr>";
+	}
+}
+echo "
+</table>
+</div>";
 ?>

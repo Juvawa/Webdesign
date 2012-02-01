@@ -244,6 +244,22 @@
 	color: #FF0000;
 }
 
+div#overlay /* Added by Cas */
+{
+	position:absolute;
+	bottom:50%;
+	right:0;
+	margin-right: 5px;
+}
+table#overlay /* Added by Cas */
+{
+	background-color: #FFFFFF;
+	border-color: #CCCCCC;
+	color: #000000;
+	border-style: solid;
+	border-width: 1px;
+}
+
 /* Added by Justin*/
 #div_name, #div_surname,
 #div_dob, #div_phone, #div_username,
