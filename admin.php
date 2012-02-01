@@ -4,7 +4,7 @@
  * file: admin.php
  * location: <document root>/
  * 
- * author: Cas van der Weegen
+ * author: Cas van der Weegen(framework) & Justin van Wageningen(input fields & queries)
  */
 require('includes/directcall.php');
 
@@ -35,7 +35,7 @@ if(isset($_GET['adminpage']))
 			$result = $rosterCheck->reqUserByID($id);
 			$areas = $rosterCheck->reqAreas();
 			echo "
-				<form name=\"moderate\" method=\"POST\" action=\"moderate.php\">
+				<form name=\"moderate\" method=\"POST\" action=\"update_user_details_admin.php\">
 				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 					<tr>
 						<td>Username</td><td>".$result['USERNAME']."</td><td></td>
@@ -66,19 +66,25 @@ if(isset($_GET['adminpage']))
 						<td>Areas</td>
 						<td style=\"width: 250px;\">";
 						$isCheck = FALSE;
+						$number = 1;
 						$allowedareas = preg_split("/,/",$result['AREAS']);
+						
 						foreach($areas as $value) {
-						for($c = 0; $c < count($allowedareas); $c++){
-							if($value == $allowedareas[$c]) {
-							$isCheck = TRUE;
+							for($c = 0; $c < count($allowedareas); $c++){
+								if($value == $allowedareas[$c]) {
+									$isCheck = TRUE;
+								}
 							}
-						}
-						if($isCheck == TRUE)
-						{
-							echo "<input type=\"checkbox\" checked/>$value";
-						} else {
-								echo "<input type=\"checkbox\" />$value";
+							if($isCheck == TRUE)
+							{
+								echo "<input type=\"checkbox\" name=\"check".$number."\" value=\"$number\" checked/>$value";
+								$number = $number * 2;
+							} 
+							else {
+								echo "<input type=\"checkbox\" name=\"check".$number."\" value=\"$number\" />$value";
+								$number = $number * 2;
 							}
+							$isCheck = FALSE;
 						}
 						
 							
@@ -87,12 +93,12 @@ if(isset($_GET['adminpage']))
 						<td>Enable</td>
 						<td style=\"width: 250px;\">";
 						if($result['ACTIVE'] == "YES") {
-							echo" <input type=\"radio\" checked />YES
-								<input type=\"radio\" />NO
+							echo" <input type=\"radio\" name=\"active\" value=\"YES\" checked />YES
+								<input type=\"radio\" name=\"active\" value=\"NO\" />NO
 							";
 						} elseif($result['ACTIVE'] == "NO") {
-							echo" <input type=\"radio\" />YES
-								<input type=\"radio\" checked />NO
+							echo" <input type=\"radio\" name=\"active\" value=\"YES\" />YES
+								<input type=\"radio\" name=\"active\" value=\"NO\" checked />NO
 							";
 						}
 						
@@ -101,20 +107,24 @@ if(isset($_GET['adminpage']))
 					<tr>
 						<td>Confirm</td>
 						<td>";
-						if($result['CONFIRMED'] == "YES") {
-							echo" <input type=\"radio\" checked />YES
-								<input type=\"radio\" />NO
+						if($result['CONFIRMED'] == "YES")
+						{
+							echo" <input type=\"radio\" name=\"confirmed\" value=\"YES\" checked />YES
+								<input type=\"radio\" name=\"confirmed\" value=\"NO\" />NO
 							";
-						} elseif($result['CONFIRMED'] == "NO") {
-							echo" <input type=\"radio\" />YES
-								<input type=\"radio\" checked />NO
-							";							
+						} 
+						elseif($result['CONFIRMED'] == "NO")
+						{
+							echo" <input type=\"radio\" name=\"confirmed\" value=\"YES\" />YES
+								<input type=\"radio\" name=\"confirmed\" value=\"NO\" checked />NO
+							";						
+							
 						}			
 						
 					echo"</td>
 					</tr>
 					<tr>
-						<td colspan=\"2\"><center><input type=\"submit\" value=\"submit\" /></center></td>
+						<td colspan=\"2\"><center><input type=\"submit\" value=\"submit\" /></center><input type=\"hidden\" value=\"$id\" name=\"userid\" /></td>
 					</tr>
 				</table>
 				</form>
@@ -163,6 +173,7 @@ if(isset($_GET['adminpage']))
 			echo "<center><p style=\"color: #FF0000;\" />Are you sure you want to confirm the folowing Day-off?</p>";
 			$result = $rosterCheck->reqByID($_GET['confirmid']);
 			echo "
+			<form name=\"confirm_exception\" method=\"POST\" action=\"confirm_exception.php\">
 				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 					<tr>
 						<td>Name</td><td>".$rosterCheck->reqUsername($result['USER_ID'])."</td>
@@ -180,10 +191,11 @@ if(isset($_GET['adminpage']))
 						<td>Description</td><td>".$result['DESCRIPTION']."</td>
 					</tr>
 					<tr>
-						<td colspan=\"2\" style=\"text-align: center;\"> Click to Confirm </td>
+						<td colspan=\"2\"><center><input type=\"hidden\" value=\"".$result['EXCEPTION_ID']."\" name=\"confirmid\" /><input type=\"submit\" value=\"Confirm\" /></center></td>
 					</tr>
 				</table>
-				</center>
+			</form>
+			</center>
 					";
 		}
 		else
@@ -240,6 +252,7 @@ if(isset($_GET['adminpage']))
 			echo "<center><p style=\"color: #FF0000;\" />Are you sure you want to confirm the folowing Holiday?</p>";
 			$result = $rosterCheck->reqByID($_GET['confirmid']);
 			echo "
+			<form name=\"confirm_exception\" method=\"POST\" action=\"confirm_exception.php\">
 				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 					<tr>
 						<td>Name</td><td>".$rosterCheck->reqUsername($result['USER_ID'])."</td>
@@ -254,10 +267,11 @@ if(isset($_GET['adminpage']))
 						<td>Description</td><td>".$result['DESCRIPTION']."</td>
 					</tr>
 					<tr>
-						<td colspan=\"2\" style=\"text-align: center;\"> Click to Confirm </td>
+						<td colspan=\"2\"><center><input type=\"hidden\" value=\"".$result['EXCEPTION_ID']."\" name=\"confirmid\" /><input type=\"submit\" value=\"Confirm\" /></center></td>
 					</tr>
 				</table>
-				</center>
+			</form>
+			</center>
 					";
 		}
 		else

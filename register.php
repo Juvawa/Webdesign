@@ -10,7 +10,7 @@
 require('includes/directcall.php');
 
 echo "
-	<form name=\"register\" method=\"POST\" action=\"#\" onsubmit=\"return checkEmpty(this);\" >
+	<form name=\"register\" method=\"POST\" action=\"insert_user.php\" onsubmit=\"return checkEmpty(this);\" >
 		<table>
 			<tr>
 				<td class=\"register\">Name</td>
@@ -37,7 +37,7 @@ echo "
 			</tr>
 			
 			<tr>
-				<td class=\"register\">Day of Birth (DD-MM-YYYY)</td>
+				<td class=\"register\">Date of Birth (DD-MM-YYYY)</td>
 				<td></td>
 			</tr>
 			<tr>

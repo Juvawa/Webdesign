@@ -19,6 +19,10 @@ if(isset($_GET['userpage']))
 	if($_GET['userpage'] == "details")
 	{
 		$details = $doUserRequest -> reqUserDetails($_SESSION['userid']);
+		$dob_uncut = $details['DOB'];
+		$dob_array = explode("-", $dob_uncut);
+		$dob = $dob_array[2] . "-" . $dob_array[1] . "-" . $dob_array[0];
+
 		echo "<h2 style=\"text-align: center;\"> Change personal details </h2>";
 		
 		echo "
@@ -32,13 +36,13 @@ if(isset($_GET['userpage']))
 					<td style=\"width: 150px;\">Surname:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"surname\" id=\"surname\" value=\"".$details['SURNAME']."\" onblur=\"return checkSurname();\" /></td><td><div id=\"div_surname\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">Date of Birth:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"dob\" id=\"dob\" value=\"".$details['DOB']."\" onblur=\"return checkDob();\" /></td><td><div id=\"div_dob\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Date of Birth:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"dob\" id=\"dob\" value=\"".$dob."\" onblur=\"return checkDob();\" /></td><td><div id=\"div_dob\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
 					<td style=\"width: 150px;\">Phone:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"phone\" id=\"phone\" value=\"0".$details['PHONE']."\" onblur=\"return checkPhone();\" /></td><td><div id=\"div_phone\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">Email:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"email\" id=\"email\" value=\"".$details['EMAIL']."\" /></td><td><div id=\"div_email\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Email:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"email\" id=\"email\" value=\"".$details['EMAIL']."\" onblur=\"return checkEmailUser();\" /></td><td><div id=\"div_email\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
 					<td colspan=\"3\" style=\"text-align: center;\"><input type=\"submit\" value=\"Submit\" alt=\" Submit\" /></td>
@@ -58,16 +62,16 @@ if(isset($_GET['userpage']))
 		<form name=\"login_details\" method=\"POST\" action=\"update_login_details.php\">
 			<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 				<tr>
-					<td style=\"width: 150px;\">Username:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"name\" id=\"name\" value=\"".$login['USERNAME']."\" onblur=\"return checkFname();\" /></td><td><div id=\"div_name\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Username:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"name\" id=\"name\" value=\"".$login['USERNAME']."\" onblur=\"return checkUsernameUser();\" /></td><td><div id=\"div_username\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">Old password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"oldpassword\" id=\"oldpassword\" value=\"".$login['USERNAME']."\" onblur=\"return checkSurname();\" /></td><td><div id=\"div_surname\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Old password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"oldpassword\" id=\"oldpassword\" onblur=\"return checkOldPassword();\" /></td><td><div id=\"div_oldpassword\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">New password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"password\" id=\"password\" value=\"".$login['USERNAME']."\" onblur=\"return checkSurname();\" /></td><td><div id=\"div_surname\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">New password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"password\" id=\"password\" onblur=\"return checkPassword();\" /></td><td><div id=\"div_password\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">Repeat new password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"repeatpassword\" id=\"repeatpassword\" value=\"".$login['USERNAME']."\" onblur=\"return checkSurname();\" /></td><td><div id=\"div_surname\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Repeat new password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"repeatpassword\" id=\"repeatpassword\" onblur=\"return checkPassword();\" /></td><td><div id=\"div_repeatpassword\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
 					<td colspan=\"3\" style=\"text-align: center;\"><input type=\"submit\" value=\"Submit\" alt=\" Submit\" /></td>

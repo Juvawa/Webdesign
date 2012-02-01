@@ -1,3 +1,11 @@
+/*
+ * Form validator
+ * file: checkForm.js
+ * location: <document root>/includes/layout/
+ * 
+ * author: Justin van Wageningen
+ */
+ 
 function checkFname() {
         if(document.getElementById("name").value.length != 0) {
                 var c = document.getElementById("name").value.split("");
@@ -89,6 +97,67 @@ function checkUsername() {
 	}
 }
 
+function checkUsernameUser() {
+	var xmlhttp;
+	var username = document.getElementById("username").value;
+	if (document.getElementById("username").value.length != 0) {
+			if(document.getElementById("username").value.length < 5) {
+				document.getElementById("div_username").innerHTML = "Username must be longer than 4 characters";
+				document.getElementById("username").style.borderColor = "red";
+				return false;
+			} else {
+				document.getElementById("username").style.borderColor = "";
+			}
+				
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		xmlhttp.onreadystatechange = function() {
+			var result = xmlhttp.responseText;
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("div_username").innerHTML = result;
+				if(result.length != "0") {
+					document.getElementById("username").style.borderColor = "red";
+				}
+			}
+		}
+		xmlhttp.open("GET", "update_username_user.php?username=" + username, true);
+		xmlhttp.send();
+	}
+}
+
+function checkOldPassword() {
+	var xmlhttp;
+	var oldpassword = document.getElementById("oldpassword").value;
+	if (document.getElementById("oldpassword").value.length != 0) {				
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		xmlhttp.onreadystatechange = function() {
+			var result = xmlhttp.responseText;
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("div_oldpassword").innerHTML = result;
+				if(result.length != "0") {
+					document.getElementById("oldpassword").style.borderColor = "red";
+				}
+			}
+		}
+		xmlhttp.open("GET", "update_password_user.php?oldpassword=" + oldpassword, true);
+		xmlhttp.send();
+	}
+}
+	
+
 function checkPassword() {
         if(document.getElementById("repeatpassword").value.length != 0 && document.getElementById("password").value.length != 0) {
                 if(document.getElementById("password").value != document.getElementById("repeatpassword").value) {
@@ -139,6 +208,41 @@ function checkEmail() {
         return true;
 }
 
+function checkEmailUser() {
+        var regex_email = /^(\w+\.)*\w+@(\w+\.)+[A-Za-z]+$/;
+		var email = document.getElementById("email").value;
+        if(document.getElementById("email").length != 0) {
+			if(!regex_email.test(document.getElementById("email").value)) {
+					document.getElementById("email").style.borderColor = "red";
+					document.getElementById("div_email").innerHTML = "Email doesn't have the right syntax";
+					return false;
+			}
+			
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+	
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var result = xmlhttp.responseText;
+					document.getElementById("div_email").innerHTML = result;
+					if(result.length != "0") {
+						document.getElementById("email").style.borderColor = "red";
+					}
+				}
+			}
+			xmlhttp.open("GET", "update_email_user.php?email=" + email, true);
+			xmlhttp.send();
+        }
+        document.getElementById("email").style.borderColor = "";
+        document.getElementById("div_email").innerHTML = "";
+        return true;
+}
+
 function checkEmpty(form) {				
         for(i = 0; i < 12; i++) {
                 box = form.elements[i];
@@ -151,20 +255,4 @@ function checkEmpty(form) {
                 }
         }
         return true;
-}
-
-function disableInput()
-{
-	if(document.getElementById("radiono1").checked == true) 
-	{
-		document.getElementById("startday1").readonly = true;
-		document.getElementById("endday1").readonly = true;
-		alert(document.getElementById("startday1").readonly);
-	}
-	else if(document.getElementById("radioyes1").checked == true)
-	{
-		document.getElementById.("startday1").readonly = false;
-		document.getElementById("endday1").readonly = false;
-	}
-
 }

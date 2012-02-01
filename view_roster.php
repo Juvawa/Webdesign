@@ -20,11 +20,14 @@ if(isset($_GET['view']))
 	}
 	elseif($_GET['view'] == "day")
 	{
-		
+		include('includes/roster/schedule_day.php');
 	}
-	else
+	elseif($_GET['view'] == "personal")
 	{
-		
+		include('includes/roster/schedule_week_personal.php');
+	}
+	else{
+	
 	}
 }
 else

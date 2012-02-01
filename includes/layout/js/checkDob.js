@@ -1,4 +1,12 @@
-// Determines if it is a leap-year.
+/*
+ * Date of Birth validator
+ * file: checkDob.js
+ * location: <document root>/includes/layout/
+ * 
+ * author: Justin van Wageningen
+ */
+
+// Determines if it is a leap-strYear.
 function daysInFebruary (year){
         if(((year % 4 == 0) && (!(year % 100 == 0)) || (year % 400 == 0))) {
                 return 29;
@@ -13,9 +21,6 @@ function isValid (dobValue) {
         var strDay = dobValue.substring(0, pos1);
         var strMonth = dobValue.substring(pos1 + 1, pos2);
         var strYear = dobValue.substring(pos2 + 1);
-        month=parseInt(strMonth);
-        day=parseInt(strDay);
-        year=parseInt(strYear);
 
         // indexOf return -1 if searchstring is not found.
         if (pos1 == -1 || pos2 == -1) {
@@ -23,17 +28,17 @@ function isValid (dobValue) {
                 document.getElementById("div_dob").innerHTML = "Date does not match the DD-MM-YYYY format";
                 return false;
         }
-        if (strMonth.length < 1 || month < 1 || month > 12){
+        if (strMonth.length < 1 || strMonth < 1 || strMonth > 12){
+                document.getElementById("dob").style.borderColor = "red";
+                document.getElementById("div_dob").innerHTML = "Month < 0 and > 12 do not exist.";
+                return false;
+        }
+        if (strDay.length < 1 || strDay < 1 || strDay > 31 || (strMonth == 2 && strDay > daysInFebruary(strYear)) || strDay > daysInMonth[strMonth]){
                 document.getElementById("dob").style.borderColor = "red";
                 document.getElementById("div_dob").innerHTML = "Date does not exist";
                 return false;
         }
-        if (strDay.length < 1 || day < 1 || day > 31 || (month == 2 && day > daysInFebruary(year)) || day > daysInMonth[month]){
-                document.getElementById("dob").style.borderColor = "red";
-                document.getElementById("div_dob").innerHTML = "Date does not exist";
-                return false;
-        }
-        if (strYear.length != 4 || year == 0 || year < 1900 || year > 2012){
+        if (strYear.length != 4 || strYear == 0 || strYear < 1900 || strYear > 2012){
                 document.getElementById("dob").style.borderColor = "red";
                 document.getElementById("div_dob").innerHTML = "Fill in a date between the year 1900 and 2012 please";
                 return false;
@@ -49,10 +54,10 @@ function isValid (dobValue) {
 }
 
 function checkDob(){
-        if (document.getElementById("dob").value.length != 0) {
-                if (!(isValid(document.getElementById("dob").value))) {
-                        return false;
-                }
-        }
+	if (document.getElementById("dob").value.length != 0) {
+			if (!(isValid(document.getElementById("dob").value))) {
+					return false;
+			}
+	}
     return true
  }

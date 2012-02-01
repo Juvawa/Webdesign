@@ -1,27 +1,51 @@
 <?php
 /*
  * User registration query
- * file: user_req.php
+ * file: insert_user.php
  * location: <document root>/
  * 
  * author: Justin van Wageningen
  */
- error_reporting(E_ALL);
- ini_set('display_errors', '1');
- 
- 
- require('includes/db/connect.php');
- require('includes/auth/dohash.php');
- 
- $database = new Database();
- $hash = new doHash(); 
- 
- $password = $hash -> hash($_POST['password']);
- var_dump($password);
- 
- $database -> doQuery("INSERT INTO EMPLOYEE (USER_ID, NAME, SURNAME, DOB, PHONE, EMAIL, USERNAME, PASSWORD, HOURS, AREAS, ACTIVE, CONFIRMED) VALUES ('NULL','".$_POST['name']."','".$_POST['surname']."','1991-01-24','".$_POST['phone']."','".$_POST['email']."','".$_POST['username']."','".$password."', '0', '', 'NO', 'NO'");
- 
- var_dump($_POST);
- echo "You have been succesfully registred";
- 
- ?>
+require('includes/db/connect.php');
+require('includes/db/config.php');
+
+$db = new Database();
+
+$name = $_POST['name'];
+$surname = $_POST['surname'];
+$phone = $_POST['phone'];
+$email = $_POST['email'];
+$loginname = $_POST['username'];
+$pw = $_POST['password'];
+$hashpassword = sha1($pw);
+
+//DATE IN SQL FORMAT (DD-MM-YYYY -> YYYY-MM-DD)
+$dob_uncut = $_POST['dob'];
+$dob_array = explode("-", $dob_uncut);
+$dob = $dob_array[2] . "-" . $dob_array[1] . "-" . $dob_array[0];
+
+//CONNECT TO INSERT
+$con = $db -> connect($host, $username, $password);
+mysql_select_db($database, $con);
+
+mysql_query("INSERT INTO EMPLOYEE VALUES (NULL, '$name', '$surname', '$dob', '$phone', '$email', '$loginname', '$hashpassword', '0', NULL, 'NO', 'NO')");
+
+$db -> disconnect($con);
+//DISCONNECT AFTER INSERT
+
+//GET USER_ID FROM THE JUST REGISTRED USER
+$userid = $db -> doQuery("SELECT USER_ID FROM EMPLOYEE WHERE USERNAME = '$loginname'");
+
+//CONNECT TO INSERT DEFAULT PREFERENCES
+$con = $db -> connect($host, $username, $password);
+mysql_select_db($database, $con);
+
+$days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
+
+foreach($days as $value)
+{
+	mysql_query("INSERT INTO USER_PREFERENCES VALUES('".$userid['0']."', '$value', '00:00:00', '00:00:00', 'NO')");
+}
+$db -> disconnect($con);
+//DISCONNECT AFTER INSERT
+?>

@@ -61,6 +61,17 @@
 	border-right: solid 1px;
 	border-bottom: solid 1px;
 }
+.horizontal_time{
+	float: left;
+	margin-top: 1px;
+	width: 750px;
+	height: 20px;
+	border-right: solid 1px;
+	border-bottom: solid 1px;
+}
+.horizontal_time_table{
+	text-align: right;
+}
 .day_week{
 	
 	padding: 5px;

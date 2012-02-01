@@ -21,7 +21,6 @@ echo "
 	</div>
    	<div class=\"footer\">
         ".$year." &#169; VDWEEGEN Automatisering & Justin van Wageningen & Casper van der Poll
-		</div>
 	</div>
 </div>
 </body>

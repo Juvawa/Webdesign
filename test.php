@@ -1,6 +1,6 @@
 <?php
 
-class Schedule{
+class Testen{
 	
 	function createWeek($date){
 		$we = "";
@@ -11,51 +11,10 @@ class Schedule{
 		$functie3 = $this -> createGrid($functie2);
 		return $functie3;
 	}
-	function createDay($date){
-		$functie = dayQuery($date);
-	}
 	
-	function dayQuery($date){
-		$database = new Database();
-		$result = $database -> doRows("SELECT * FROM SCHEDULE_HOURS WHERE SCHEDULE_HOURS.DATE = '".$date."'");
-		$values = array();
-		(string)$table = "";
-		for($count = 0; $count < count($result); $count++){
-			$values['START'] = $result[$count]['TIME_START'];
-			$values['END'] = $result[$count]['TIME_END'];
-			$values['NAME'] = $database -> doQuery("SELECT NAME FROM EMPLOYEE WHERE USER_ID = '".$result[$count]['USER_ID']."'");
-			$values['MARGIN'] = $this -> marginLeft($result[$count]['TIME_START']);
-			$values['LENGTH'] = $this -> barLength($result[$count]['TIME_START'],  $result[$count]['TIME_END']);
-			$table = $this -> dayDiv($values);
-		}
-		return $table;
-	}
-	
-	function marginLeft($start){
-		return ($start - 16) * 67;
-	}
-	
-	function barLength($start, $end){
-		if($end == "01:00:00") {
-			$end = 25;
-		} else if ($end == "02:00:00") {
-			$end = 26;
-		} else if ($end == "00:00:00"){
-			$end = 24;
-		}
-		
-		return ($end - $start) * 67;
-	}
-	
-	function dayDiv($workers){
-		
-		(string)$result = "<tr><td><div class=\"work\" style=\"float: left; width: ".$workers['LENGTH']."px; font-family: arial; font-size: 20px;\">".$workers['NAME']."  ".$workers['START']."-".$workers['END']."</div></td></tr>";
-		return $result;
-		
-	}
 	
 	function personalQuery($date){
-		$id = $_SESSION['userid'];
+		$id = "8";//$this -> $_SESSION['userid'];
 		$database = new Database();
 		$worktimes = array();
 		$result2 = $database -> doQuery("SELECT * FROM SCHEDULE_HOURS WHERE SCHEDULE_HOURS.DATE = '".$date."' AND SCHEDULE_HOURS.USER_ID = '".$id."'");
