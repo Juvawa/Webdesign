@@ -25,7 +25,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="grid">
+	<div class="grid2">
 	<?php
 		require('schedule.php');
 		$schedule = new Schedule();

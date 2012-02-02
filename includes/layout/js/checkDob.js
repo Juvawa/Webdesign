@@ -1,7 +1,7 @@
 /*
  * Date of Birth validator
  * file: checkDob.js
- * location: <document root>/includes/layout/js/
+ * location: <document root>/includes/layout/
  * 
  * author: Justin van Wageningen
  */

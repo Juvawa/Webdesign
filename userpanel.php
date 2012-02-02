@@ -62,19 +62,19 @@ if(isset($_GET['userpage']))
 		<form name=\"login_details\" method=\"POST\" action=\"update_login_details.php\">
 			<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 				<tr>
-					<td style=\"width: 150px;\">Username:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"name\" id=\"name\" value=\"".$login['USERNAME']."\" onblur=\"return checkUsernameUser();\" /></td><td><div id=\"div_username\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Username:</td><td style=\"width: 150px;\"><input type=\"text\" name=\"username\" id=\"username\" value=\"".$login['USERNAME']."\" onblur=\"return checkUsernameUser();\" /></td><td><div id=\"div_username\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
 					<td style=\"width: 150px;\">Old password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"oldpassword\" id=\"oldpassword\" onblur=\"return checkOldPassword();\" /></td><td><div id=\"div_oldpassword\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">New password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"password\" id=\"password\" onblur=\"return checkPassword();\" /></td><td><div id=\"div_password\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">New password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"password\" id=\"password\" onblur=\"return checkPassword();\" /></td><td><div style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td style=\"width: 150px;\">Repeat new password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"repeatpassword\" id=\"repeatpassword\" onblur=\"return checkPassword();\" /></td><td><div id=\"div_repeatpassword\" style=\"width: 250px;\"></div></td>
+					<td style=\"width: 150px;\">Repeat new password:</td><td style=\"width: 150px;\"><input type=\"password\" name=\"repeatpassword\" id=\"repeatpassword\" onblur=\"return checkPassword();\" /></td><td><div id=\"div_password\" style=\"width: 250px;\"></div></td>
 				</tr>
 				<tr>
-					<td colspan=\"3\" style=\"text-align: center;\"><input type=\"submit\" value=\"Submit\" alt=\" Submit\" /></td>
+					<td colspan=\"3\" style=\"text-align: center;\"><input type=\"hidden\" value=\"".$_SESSION['userid']."\" name=\"userid\" /><input type=\"submit\" value=\"Submit\" alt=\" Submit\" /></td>
 				</tr>
 			</table>
 		</form>
@@ -89,6 +89,7 @@ if(isset($_GET['userpage']))
 		
 		echo "
 			<center>
+				<font style=\"color: red;\">Make sure you enter whole hours, half hours etc will not be accepted</font>
 				<form name=\"preferences\" method=\"POST\" action=\"update_preferences.php\">
 				<table border=\"1\" style=\"border-style: solid; border-width: 1px;\">
 					<tr>
@@ -99,10 +100,10 @@ if(isset($_GET['userpage']))
 					for($count = 0; $count < count($preferences); $count++) {
 						if($preferences[$count]['AVAILABLE'] == "YES") 
 						{
-							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" value=\"".$preferences[$count]['TIME_START']."\" size=\"8\" maxlength=\"8\" /></center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" value=\"".$preferences[$count]['TIME_START']."\" size=\"8\" maxlength=\"8\" onblur=\"return checkPreferences();\" /></center></td>";
 						}
 						elseif($preferences[$count]['AVAILABLE'] == "NO") {
-							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" size=\"8\" maxlength=\"8\" /></center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"startday".$count."\" id=\"startday".$count."\" value=\"".$preferences[$count]['TIME_START']."\" size=\"8\" maxlength=\"8\" onblur=\"return checkPreferences();\" /></center></td>";
 						}
 					}
 						
@@ -114,10 +115,10 @@ if(isset($_GET['userpage']))
 					for($count = 0; $count < count($preferences); $count++) {
 						if($preferences[$count]['AVAILABLE'] == "YES") 
 						{
-							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" value=\"".$preferences[$count]['TIME_END']."\" size=\"8\" maxlength=\"8\" /></center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" value=\"".$preferences[$count]['TIME_END']."\" size=\"8\" maxlength=\"8\" onblur=\"return checkPreferences();\" /></center></td>";
 						}
 						elseif($preferences[$count]['AVAILABLE'] == "NO") {
-							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" size=\"8\" maxlength=\"8\" /></center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"text\" name=\"endday".$count."\" id=\"endday".$count."\" value=\"".$preferences[$count]['TIME_END']."\" size=\"8\" maxlength=\"8\" onblur=\"return checkPreferences();\" /></center></td>";
 						}
 					}
 
@@ -128,15 +129,15 @@ if(isset($_GET['userpage']))
 					for($count = 0; $count < count($preferences); $count++) {
 						if($preferences[$count]['AVAILABLE'] == "YES") 
 						{
-							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" onclick=\"disableInput();\"checked />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" onclick=\"disableInput();\" />NO</center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" value=\"YES\" checked />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" value=\"NO\" onclick=\"disableInput();\" />NO</center></td>";
 						}
 						elseif($preferences[$count]['AVAILABLE'] == "NO") {
-							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" onclick=\"disableInput();\" />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" onclick=\"disableInput();\" checked/>NO</center></td>";
+							echo"<td style=\"width: 130px;\"><center><input type=\"radio\" name=\"radio".$count."\" id=\"radioyes".$count."\" value=\"YES\" />YES<br /> <input type=\"radio\" name=\"radio".$count."\" id=\"radiono".$count."\" value=\"NO\" onclick=\"disableInput();\" checked/>NO</center></td>";
 						}
 					}
 		echo"			</tr>
 					<tr>
-						<td colspan=\"8\" style=\"text-align: center;\"><input type=\"submit\" value=\"Submit\" alt=\"Submit\" /></td>
+						<td colspan=\"8\" style=\"text-align: center;\"><input type=\"hidden\" name=\"userid\" value=\"".$_SESSION['userid']."\" /><input type=\"submit\" value=\"Submit\" alt=\"Submit\" /></td>
 					</tr>
 				</table>
 			</form>
@@ -212,7 +213,7 @@ else
 							echo"<td style=\"width: 130\">".$userPreferences[$count]['TIME_START']." - ".$userPreferences[$count]['TIME_END']."</td>";
 						}
 						elseif($userPreferences[$count]['AVAILABLE'] == "NO") {
-							echo"<td style=\"width: 130\"></td>";
+							echo"<td style=\"width: 130\">".$userPreferences[$count]['TIME_START']." - ".$userPreferences[$count]['TIME_END']."</td>";
 						}
 					}
 			

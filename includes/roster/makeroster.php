@@ -66,6 +66,9 @@ foreach($days as &$day)
 }
 
 echo "</table>";
+/*
+ * Testing Purposes
+ * 
 echo "<br /><table border=\"1\" style=\"border-style: solid; border-width: 1px;\" /><tr>";
 $day = "MONDAY";
 for($c = 0; $c < count($shifts); $c++)
@@ -89,7 +92,9 @@ for($c = 0; $c < count($shifts); $c++)
 		echo "</tr>";
 	}
 }
-echo "</table>
+echo "</table>";
+ */
+echo "
 <div class=\"overlay\" id=\"overlay\"/>
 <table id=\"overlay\" border=\"1\">
 	<tr>
@@ -106,11 +111,11 @@ for($c = 0; $c < count($users); $c++)
 	}
 	if($users[$c]['HOURS'] == 0)
 	{
-		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . "</td><td><div id=\"hours_".$users[$c]['USER_ID']."\"></div></td></tr>";
+		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . "</td><td><div id=\"hours_".$users[$c]['USER_ID']."\">0</div></td></tr>";
 	}
 	else
 	{
-		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . " (" . $users[$c]['HOURS'] . ")</td><td><div id=\"hours_".$users[$c]['USER_ID']."\"></div></td></tr>";
+		echo "<tr><td style=\"width: 100px;\">" . $users[$c]['NAME'] . " (" . $users[$c]['HOURS'] . ")</td><td><div id=\"hours_".$users[$c]['USER_ID']."\">0</div></td></tr>";
 	}
 }
 echo "

@@ -16,7 +16,7 @@ if(isset($_GET['view']))
 	}
 	elseif($_GET['view'] == "month")
 	{
-		
+		include('includes/roster/schedule_month.php');
 	}
 	elseif($_GET['view'] == "day")
 	{

@@ -14,7 +14,7 @@ echo "
 <script	type=\"text/javascript\" src=\"includes/layout/js/checkDob.js\"></script>
 <script type=\"text/javascript\" src=\"includes/layout/js/checkForm.js\"></script>
 <script type=\"text/javascript\" src=\"includes/layout/js/doUpdate.js\"></script>
-
+<script type=\"text/javascript\" src=\"includes/layout/js/checkPreferences.js\"></script>
 </head>
 <title></title>
 <body>

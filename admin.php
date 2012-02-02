@@ -142,7 +142,7 @@ if(isset($_GET['adminpage']))
 			";
 			for($count = 0; $count < count($result); $count++)
 			{
-				echo "<tr style=\"background-color: "; if($result[$count]['CONFIRMED'] == "NO"){echo "#FF0000;\"";}elseif($result[$count]['ACTIVE'] == "NO"){echo "#FFCC00;\"";}else{echo "#33FF00;\"";} echo ">
+				echo "<tr style=\"background-color: "; if($result[$count]['ACTIVE'] == "NO"){echo "#FF0000;\"";}elseif($result[$count]['CONFIRMED'] == "NO"){echo "#FFCC00;\"";}else{echo "#33FF00;\"";} echo ">
 							<td style=\"text-align: center;\">".$result[$count]['USERNAME']."</td>
 							<td style=\"text-align: center;\">".$result[$count]['NAME']."</td>
 							<td style=\"text-align: center;\">".$result[$count]['SURNAME']."</td>

@@ -1,7 +1,7 @@
 /*
  * Form validator
  * file: checkForm.js
- * location: <document root>/includes/layout/js/
+ * location: <document root>/includes/layout/
  * 
  * author: Justin van Wageningen
  */
@@ -128,6 +128,7 @@ function checkUsernameUser() {
 		}
 		xmlhttp.open("GET", "update_username_user.php?username=" + username, true);
 		xmlhttp.send();
+		document.getElementById("username").style.borderColor = "";
 	}
 }
 
@@ -152,8 +153,9 @@ function checkOldPassword() {
 				}
 			}
 		}
-		xmlhttp.open("GET", "update_password_user.php?oldpassword=" + oldpassword, true);
+		xmlhttp.open("GET", "update_oldpassword_user.php?oldpassword=" + oldpassword, true);
 		xmlhttp.send();
+		document.getElementById("oldpassword").style.borderColor = "";
 	}
 }
 	
@@ -174,7 +176,7 @@ function checkPassword() {
 }
 
 function checkEmail() {
-        var regex_email = /^(\w+\.)*\w+@(\w+\.)+[A-Za-z]+$/;
+        var regex_email = /^([0-9a-zA-Z]+([_.-]?[0-9a-zA-Z]+)*@[0-9a-zA-Z]+[0-9,a-z,A-Z,.,-]*(.){1}[a-zA-Z]{2,4})+$/;
 		var email = document.getElementById("email").value;
         if(document.getElementById("email").length != 0) {
 			if(!regex_email.test(document.getElementById("email").value)) {
@@ -209,7 +211,7 @@ function checkEmail() {
 }
 
 function checkEmailUser() {
-        var regex_email = /^(\w+\.)*\w+@(\w+\.)+[A-Za-z]+$/;
+        var regex_email = /^([0-9a-zA-Z]+([_.-]?[0-9a-zA-Z]+)*@[0-9a-zA-Z]+[0-9,a-z,A-Z,.,-]*(.){1}[a-zA-Z]{2,4})+$/;
 		var email = document.getElementById("email").value;
         if(document.getElementById("email").length != 0) {
 			if(!regex_email.test(document.getElementById("email").value)) {
